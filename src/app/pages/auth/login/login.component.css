@@ -1,0 +1,22 @@
+.container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+.box {
+  position: relative;
+  padding: 50px 40px 30px 40px;
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  max-width: 330px;
+}
+
+.box mat-form-field {
+  display: block;
+  margin: 10px 0px;
+}
