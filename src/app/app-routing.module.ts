@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: 'content',
-    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule )
+    loadChildren: () => import('./pages/subscribers/subscribers.module').then( m => m.SubscribersModule )
   },
   {
     path: '',

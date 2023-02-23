@@ -1,13 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListComponent } from './subscribers/list/list.component';
-
-
 
 @NgModule({
-  declarations: [
-    ListComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule
   ]

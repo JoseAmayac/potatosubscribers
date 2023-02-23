@@ -29,24 +29,35 @@ export class LoginComponent implements OnInit {
 
   }
 
+  /**
+   * Método que envía los datos del usuario al backend para realizar el proceso de autenticación
+   */
   public onLogin(): void{
     if( this.loginForm.invalid ) return;
+
     const loginData: LoginData = { ...this.loginForm.value };
     this.isSending = true;
 
     this.authService.login(loginData).subscribe({
-      next: (response) => this.handleCorrectResponse( response ),
+      next: (_) => this.handleCorrectResponse( ),
       error: ( error ) => this.handleError( error )
     })
   }
 
-  private handleCorrectResponse( response: any ){
+  /**
+   * En este método se realiza la redirección del usuario a otra página de la aplicación pues ya ha iniciado sesión
+   */
+  private handleCorrectResponse(){
     this.isSending = false;
-    // this.router.navigateByUrl("/content",{
-    //   replaceUrl: true,
-    // });
+    this.router.navigateByUrl("/content",{
+      replaceUrl: true,
+    });
   }
 
+  /**
+   * Si ocurre algún error en la autenticación del usuario, dicho error es manejado en este método y
+   * mostrado al usuario usando un snackbar de la librería angular material
+   */
   private handleError( errorResponse: HttpErrorResponse ){
     this.isSending = false;
     const { error = 'Server error' } = errorResponse.error;
@@ -54,6 +65,9 @@ export class LoginComponent implements OnInit {
     this.showSnackBarError();
   }
 
+  /**
+   * Muestra el mensaje de error al usuario
+   */
   private showSnackBarError(){
     this._snackBar.open(this.errorMsg!, "", {
       duration: 4000,
