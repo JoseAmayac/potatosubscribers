@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -12,12 +13,11 @@ export class HeaderComponent implements OnInit {
   @Input() linkText: string = '';
   @Input() showActionButton: boolean = true;
 
-  constructor() { }
+  constructor(private _location: Location) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public goBack(){
-
+    this._location.back();
   }
 }

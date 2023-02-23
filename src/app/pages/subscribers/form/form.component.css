@@ -10,7 +10,7 @@
   gap: 5px;
 }
 
-.box-flex mat-form-field{
+.box-flex mat-form-field, .box-flex app-select-country{
   display: inline-block;
   width: calc( 50% - 10px );
 }

@@ -6,10 +6,16 @@ import { MatButtonModule } from "@angular/material/button";
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MatDialogModule } from "@angular/material/dialog";
+import { SelectCountryComponent } from './select-country/select-country.component';
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatInputModule } from "@angular/material/input";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 @NgModule({
   declarations: [
     HeaderComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    SelectCountryComponent
   ],
   imports: [
     CommonModule,
@@ -17,10 +23,15 @@ import { MatDialogModule } from "@angular/material/dialog";
     MatButtonModule,
     RouterModule,
     MatDialogModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    SelectCountryComponent
   ]
 })
 export class SharedModule { }

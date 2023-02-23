@@ -127,6 +127,12 @@ export class ListComponent implements OnInit {
     this.getSubscribers();
   }
 
+  /**
+   * Se encarga de manejar el evento click en el botón eliminar, lo que hace que se abra una ventana
+   * emergente en donde debe confirmar que realmente desea eliminar el subscriptor con el id enviado
+   * como parámetro, si la acción es confirmada se empieza con la ejecución en el backend
+   * @param subscriberId el id del subscriptor que desea eliminar
+   */
   public onDeleteSubscriber(subscriberId: number): void{
     const dialogData = new ConfirmDialogModel(
       "Please, confirm the action",
@@ -145,21 +151,38 @@ export class ListComponent implements OnInit {
 
   }
 
+  /**
+   * Método encargado de enviar la solicitud http delete al backend, la cual hace que el subscriptor
+   * con el id enviado como parámetro sea removido de la base de datos
+   * @param subscriberId El id del subscriptor que se va a eliminar
+   */
   public startDeleteSubscriber(subscriberId: number): void{
     this.isLoading = true;
     this.subscribersService.deleteSubscriber(subscriberId).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this._snackBar.open('Subscriber deleted successfully', '', { duration: 3000 });
-        this.getSubscribers();
-      },
-      error: () => {
-        this.isLoading = false;
-        this._snackBar.open('Server error', '', {
-          panelClass: ['error-snackbar'],
-          duration: 3000
-        });
-      }
+      next: () => this.handleCorrectDeleted(),
+      error: () => this.handleErrorDelete()
     })
+  }
+
+  /**
+   * Método encargado de manejar la respuesta correcta cuando se elimina un subscriptor
+   * Se muestra un mensaje satisfactorio y se refresca la lista de subscriptores
+   */
+  private handleCorrectDeleted(): void {
+    this.isLoading = false;
+    this._snackBar.open('Subscriber deleted successfully', '', { duration: 3000 });
+    this.getSubscribers();
+  }
+
+  /**
+   * Si algo sale mal eliminado a un subscriptor, este método se encarga de mostrar un mensaje de error
+   * al usuario
+   */
+  private handleErrorDelete(): void {
+    this.isLoading = false;
+    this._snackBar.open('Server error', '', {
+      panelClass: ['error-snackbar'],
+      duration: 3000
+    });
   }
 }

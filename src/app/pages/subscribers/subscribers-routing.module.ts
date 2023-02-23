@@ -20,7 +20,7 @@ const routes: Routes = [
     component: FormComponent
   },
   {
-    path: 'subscribers/edit/{id}',
+    path: 'subscribers/edit/:id',
     canActivate: [AuthGuard],
     component: FormComponent
   }

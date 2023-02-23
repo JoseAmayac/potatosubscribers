@@ -43,10 +43,10 @@
                 <mat-icon color="primary">information</mat-icon>
                 <span>Details</span>
               </button>
-              <button mat-menu-item >
+              <a mat-menu-item routerLink="edit/{{element.Id}}">
                 <mat-icon color="accent" >edit</mat-icon>
                 <span>Edit info</span>
-              </button>
+              </a>
               <button mat-menu-item (click)="onDeleteSubscriber(element.Id)">
                 <mat-icon color="warn" >delete</mat-icon>
                 <span>Delete</span>

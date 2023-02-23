@@ -7,3 +7,7 @@ export interface SubscriberCreate{
   Area: string;
   Topics: any[];
 }
+
+export interface SubscriberUpdate extends SubscriberCreate {
+  Id: number;
+}

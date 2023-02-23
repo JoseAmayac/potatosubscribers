@@ -1,8 +1,8 @@
-<app-header [showActionButton]="false" title="Create subscriber" [showBackButton]="true"></app-header>
+<app-header [showActionButton]="false" [title]="toEdit ? 'Edit Subscriber' : 'Create subscriber'" [showBackButton]="true"></app-header>
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <form [formGroup]="formData" (ngSubmit)="onCreate()">
+      <form [formGroup]="formData" (ngSubmit)="toEdit ? onUpdate() : onCreate()">
           <div class="box-flex">
             <mat-form-field appearance="outline">
               <mat-label>Name</mat-label>
@@ -26,18 +26,8 @@
               <input matInput formControlName="JobTitle">
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Country</mat-label>
-              <input type="text"  matInput formControlName="CountryCode" [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete" >
-                <mat-option *ngFor="let country of countries" [value]="country.Code">
-                  {{country.Name}} ({{country.Code}})
-                </mat-option>
-              </mat-autocomplete>
-              <mat-error *ngIf="formData.get('CountryCode')?.invalid">
-                <span *ngIf="formData.get('CountryCode')?.hasError('requiredIfEmpty')" >Country is required if email is empty</span>
-              </mat-error>
-            </mat-form-field>
+
+            <app-select-country control="CountryCode" [formGroup]="formData" ></app-select-country>
 
             <mat-form-field appearance="outline">
               <mat-label>Phone Number</mat-label>
@@ -52,8 +42,8 @@
               <input type="text" matInput formControlName="Area">
             </mat-form-field>
           </div>
-          <button type="submit" class="button" [disabled]="formData.invalid" mat-raised-button color="primary">
-            Crear Subscriptor
+          <button type="submit" class="button" [disabled]="formData.invalid || isLoading" mat-raised-button color="primary">
+            {{toEdit ? 'Edit subscriber' : 'Create subscriber'}}
           </button>
         </form>
       </mat-card-content>

@@ -13,11 +13,11 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from "@angular/material/button";
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon'
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     ListComponent,
@@ -36,11 +36,11 @@ import { MatIconModule } from '@angular/material/icon'
     MatStepperModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatAutocompleteModule,
     MatCardModule,
     MatButtonModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ]
 })
 export class SubscribersModule { }

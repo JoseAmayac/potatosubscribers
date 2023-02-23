@@ -4,11 +4,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { requiredIfEmptyValidator } from 'src/app/helpers/requiredIfEmptyValidator';
 import { Country } from 'src/app/interfaces/country';
-import { CountriesService } from 'src/app/services/countries.service';
-import { distinctUntilChanged } from "rxjs";
+
 import { SubscribersService } from 'src/app/services/subscribers.service';
-import { SubscriberCreate } from 'src/app/interfaces/subscriber-create';
-import { Router } from '@angular/router';
+import { SubscriberCreate, SubscriberUpdate } from 'src/app/interfaces/subscriber-create';
+import { ActivatedRoute, Router } from '@angular/router';
+import { addListenerToControlChanges } from 'src/app/helpers/addListenerToControlChanges';
+import { Subscriber } from 'src/app/interfaces/subscriber';
 
 @Component({
   selector: 'app-form',
@@ -20,10 +21,14 @@ export class FormComponent implements OnInit {
   countries: Country[] = [];
   isLoading: boolean = true;
 
-  constructor(private countriesService: CountriesService,
-              private _snackBar: MatSnackBar,
+  toEdit: boolean = false;
+  idToEdit: number = -1;
+
+  constructor(private _snackBar: MatSnackBar,
               private subscribersService: SubscribersService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
+
     this.formData = new FormGroup({
       Name: new FormControl('',[Validators.required]),
       Email: new FormControl('', [ Validators.email, requiredIfEmptyValidator('Email', 'PhoneNumber') ]),
@@ -33,71 +38,82 @@ export class FormComponent implements OnInit {
       Area: new FormControl('')
     })
 
-    this.addListenerToControlChanges('Email',['PhoneNumber','CountryCode']);
-    this.addListenerToControlChanges('PhoneNumber',['Email']);
-    this.addListenerToControlChanges('CountryCode',['Email']);
+    addListenerToControlChanges(this.formData, 'Email',['PhoneNumber','CountryCode']);
+    addListenerToControlChanges(this.formData, 'PhoneNumber',['Email']);
+    addListenerToControlChanges(this.formData, 'CountryCode',['Email']);
   }
 
   ngOnInit(): void {
-    this.getCountries();
-  }
+    const id = this.route.snapshot.paramMap.get('id')
 
-  public getCountries(): void{
-    this.isLoading = true;
-    this.countriesService.getCountries().subscribe({
-      next: ( countries: Country[] ) => this.handleCorrectResponseCountries( countries ),
-      error: ( error: any) => this.handleErrorCountries( error )
-    });
-  }
-
-  private handleCorrectResponseCountries( countries: Country[]): void{
-    this.isLoading = false;
-    this.countries = countries;
-  }
-
-  private handleErrorCountries( error: HttpErrorResponse ): void {
-    this.isLoading = false;
-    console.log( error );
-
-  }
-
-  public addListenerToControlChanges(controlName: string, controlsToUpdate:string[]):void{
-    this.formData.get(controlName)?.valueChanges
-    .pipe(distinctUntilChanged())
-    .subscribe(() => {
-      this.updateControls(controlsToUpdate)
-    });
-  }
-  public updateControls(controls: string[]): void{
-    for (const control of controls) {
-      const formControl = this.formData.get(control);
-      formControl?.updateValueAndValidity();
+    if( id ){
+      this.idToEdit = Number(id);
+      this.toEdit = true;
+      this.getSubscriber();
     }
   }
 
-  public onCreate(): void{
-    if( this.formData.invalid ) return;
-
-    const subscriber: SubscriberCreate = { ...this.formData.value, Topics: [] };
-    this.subscribersService.createSubscriber(subscriber).subscribe({
-      next: ( response ) => this.handleCorrectCreate( response ),
-      error: ( error ) => this.handleErrorCreate( error ),
+  public getSubscriber(): void {
+    this.isLoading = true;
+    this.subscribersService.getSubscriber(this.idToEdit).subscribe({
+      next: (subscriber: Subscriber) => this.handleCorrectGetSubscriber( subscriber ),
+      error: ( error: HttpErrorResponse) => this.handleErrorGetSubscriber( error )
     });
   }
 
-  private handleCorrectCreate( response: any ): void{
-    this._snackBar.open('Subscriber created successfully','',{
+  private handleCorrectGetSubscriber( subscriber: Subscriber): void {
+    this.isLoading = false;
+    const {Name, Email, CountryCode,JobTitle,PhoneNumber, Area} = subscriber;
+    this.formData.setValue({Name,Email,CountryCode,JobTitle,PhoneNumber,Area});
+
+  }
+
+  private handleErrorGetSubscriber( errorResponse: HttpErrorResponse ): void {
+    this.isLoading = false;
+    const { error = 'Server error'} = errorResponse.error;
+    this._snackBar.open(error,'',{
+      duration: 3000,
+      panelClass: ['error-snackbar']
+    });
+    this.router.navigateByUrl('/content/subscribers');
+  }
+
+
+  public onCreate(): void{
+    if( this.formData.invalid ) return;
+    this.isLoading = true;
+    const subscriber: SubscriberCreate = { ...this.formData.value, Topics: [] };
+    this.subscribersService.createSubscriber(subscriber).subscribe({
+      next: () => this.handleCorrectResponse( 'Subscriber created successfully' ),
+      error: ( error ) => this.handleErrorResponse( error ),
+    });
+  }
+
+  private handleCorrectResponse(msg: string): void{
+    this.isLoading = false;
+    this._snackBar.open(msg,'',{
       duration: 3000
     });
     this.router.navigateByUrl("/content/subscribers");
   }
 
-  private handleErrorCreate( errorResp: HttpErrorResponse ): void{
+  private handleErrorResponse( errorResp: HttpErrorResponse ): void{
+    this.isLoading = false;
     const { Message = 'Server error' } = errorResp.error;
     this._snackBar.open(Message,'',{
       panelClass: ['error-snackbar']
     });
+  }
 
+  public onUpdate(): void{
+    if( this.formData.invalid ) return;
+
+    const subscriber: SubscriberUpdate = { ...this.formData.value, Id: this.idToEdit, Topics: []};
+    this.isLoading = false;
+    this.subscribersService.updateSubscriber(this.idToEdit, subscriber ).subscribe({
+      next: () => this.handleCorrectResponse( 'Subscriber updated successfully '),
+      error: (error) => this.handleErrorResponse(error)
+    })
   }
 
 }
