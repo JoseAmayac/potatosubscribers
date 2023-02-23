@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GetOptions } from '../interfaces/get-options';
 import { SubscriberResponse } from '../interfaces/subscriber';
+import { SubscriberCreate } from '../interfaces/subscriber-create';
 
 const URL = environment.baseUrl;
 
@@ -28,5 +29,16 @@ export class SubscribersService {
       .set("sortType", sortType)
 
     return this.http.get<SubscriberResponse>(`${URL}/subscribers`, { params });
+  }
+
+  public createSubscriber(subscriber: SubscriberCreate): Observable<any>{
+    const body = {
+      Subscribers: [subscriber]
+    }
+    return this.http.post(`${URL}/subscribers`,body);
+  }
+
+  public deleteSubscriber(subscriberId: number): Observable<any>{
+    return this.http.delete(`${URL}/subscribers/${subscriberId}`);
   }
 }

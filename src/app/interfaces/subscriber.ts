@@ -1,19 +1,14 @@
+import { SubscriberCreate } from "./subscriber-create";
+
 export interface SubscriberResponse{
   Count: number;
   Data: Subscriber[]
 }
-
-export interface Subscriber {
+export interface Subscriber extends SubscriberCreate{
   SystemId?: any;
-  Area: string;
   PublicId: number;
-  CountryCode?: any;
   CountryName: string;
-  Name: string;
   EndpointsCount: number;
-  Email: string;
-  JobTitle: string;
-  PhoneNumber: string;
   PhoneCode: string;
   PhoneCodeAndNumber: string;
   LastActivityUtc?: any;
@@ -23,7 +18,6 @@ export interface Subscriber {
   SubscriptionMethod: number;
   SubscriptionState: number;
   SubscriptionStateDescription: string;
-  Topics: any[];
   ValidEmail: boolean;
   Activity: string;
   ConnectionState: number;

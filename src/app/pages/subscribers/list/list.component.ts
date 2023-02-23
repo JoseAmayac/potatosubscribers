@@ -13,6 +13,10 @@ import {
   filter
 } from "rxjs/operators";
 import { fromEvent } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogModel } from 'src/app/models/confirm-dialog-model';
+import { ConfirmDialogComponent } from 'src/app/components/shared/confirm-dialog/confirm-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list',
@@ -25,7 +29,7 @@ export class ListComponent implements OnInit {
   @ViewChild('inputSearch', { static: true }) searchInput: ElementRef | undefined;
 
   subscribers: Subscriber[] = [];
-  displayedColumns: string[] = ['PublicId', 'Name', 'Email', 'JobTitle'];
+  displayedColumns: string[] = ['PublicId', 'Name', 'Email', 'JobTitle', 'Action'];
   currentPage: number = 1;
   totalPerPage: number = 5;
   totalRecords: number = 0;
@@ -34,7 +38,9 @@ export class ListComponent implements OnInit {
   sortOrder: string = 'PublicId';
   sortType: number = 0;
 
-  constructor(private subscribersService: SubscribersService) { }
+  constructor(private subscribersService: SubscribersService,
+              private dialog: MatDialog,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getSubscribers();
@@ -121,4 +127,39 @@ export class ListComponent implements OnInit {
     this.getSubscribers();
   }
 
+  public onDeleteSubscriber(subscriberId: number): void{
+    const dialogData = new ConfirmDialogModel(
+      "Please, confirm the action",
+      "Are you sure you want to delete this subscriber from the database?");
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.startDeleteSubscriber( subscriberId );
+      }
+    });
+
+  }
+
+  public startDeleteSubscriber(subscriberId: number): void{
+    this.isLoading = true;
+    this.subscribersService.deleteSubscriber(subscriberId).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this._snackBar.open('Subscriber deleted successfully', '', { duration: 3000 });
+        this.getSubscribers();
+      },
+      error: () => {
+        this.isLoading = false;
+        this._snackBar.open('Server error', '', {
+          panelClass: ['error-snackbar'],
+          duration: 3000
+        });
+      }
+    })
+  }
 }

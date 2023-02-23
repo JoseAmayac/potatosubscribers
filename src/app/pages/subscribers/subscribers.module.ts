@@ -11,7 +11,13 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSortModule } from '@angular/material/sort';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { MatStepperModule } from '@angular/material/stepper';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCardModule } from '@angular/material/card'
+import { MatButtonModule } from "@angular/material/button";
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon'
 @NgModule({
   declarations: [
     ListComponent,
@@ -27,7 +33,14 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatProgressSpinnerModule,
     MatSortModule,
     ComponentsModule,
-    MatStepperModule
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    MatCardModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule
   ]
 })
 export class SubscribersModule { }

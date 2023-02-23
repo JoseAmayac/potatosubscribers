@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Country, CountryResponse } from '../interfaces/country';
 
 const URL = environment.baseUrl;
 
@@ -12,7 +13,9 @@ export class CountriesService {
 
   constructor(private http: HttpClient) { }
 
-  public getCountries(): Observable<any>{
-    return this.http.get(`${URL}/countries`);
+  public getCountries(): Observable<Country[]>{
+    return this.http.get<CountryResponse>(`${URL}/countries`).pipe(
+      map((response: CountryResponse) => response.Data)
+    );
   }
 }

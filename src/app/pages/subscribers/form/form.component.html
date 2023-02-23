@@ -1,4 +1,61 @@
-<app-header [showActionButton]="false" title="Subscriber List" [showBackButton]="true"></app-header>
-<form >
+<app-header [showActionButton]="false" title="Create subscriber" [showBackButton]="true"></app-header>
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="formData" (ngSubmit)="onCreate()">
+          <div class="box-flex">
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="Name">
+              <mat-error *ngIf="formData.get('Name')?.invalid">
+                <span *ngIf="formData.get('Name')?.hasError('required')" >Name is required</span>
+              </mat-error>
+            </mat-form-field>
 
-</form>
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="Email">
+              <mat-error *ngIf="formData.get('Email')?.invalid">
+                <span *ngIf="formData.get('Email')?.hasError('requiredIfEmpty')" >Email is required if phone number or country is empty</span>
+                <span *ngIf="formData.get('Email')?.hasError('email')" >Email is invalid</span>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>JobTitle</mat-label>
+              <input matInput formControlName="JobTitle">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Country</mat-label>
+              <input type="text"  matInput formControlName="CountryCode" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" >
+                <mat-option *ngFor="let country of countries" [value]="country.Code">
+                  {{country.Name}} ({{country.Code}})
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="formData.get('CountryCode')?.invalid">
+                <span *ngIf="formData.get('CountryCode')?.hasError('requiredIfEmpty')" >Country is required if email is empty</span>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input type="number" matInput formControlName="PhoneNumber">
+              <mat-error *ngIf="formData.get('PhoneNumber')?.invalid">
+                <span *ngIf="formData.get('PhoneNumber')?.hasError('requiredIfEmpty')" >Phone Number is required if email is empty</span>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Area</mat-label>
+              <input type="text" matInput formControlName="Area">
+            </mat-form-field>
+          </div>
+          <button type="submit" class="button" [disabled]="formData.invalid" mat-raised-button color="primary">
+            Crear Subscriptor
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+</div>
