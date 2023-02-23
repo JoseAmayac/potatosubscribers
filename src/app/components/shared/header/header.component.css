@@ -1,0 +1,29 @@
+.header{
+  background-color: #673ab7;
+  color: white;
+  padding: 20px 30px;
+}
+
+.header .title{
+  font-weight: 500;
+  font-size: 22px;
+  margin-bottom: 7px;
+}
+
+.header .page-title{
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.button-action, .back-button{
+  display: block;
+  width: min-content;
+  margin-top: 20px;
+}
+.button-action{
+  margin-left: auto;
+}
+.button-section{
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,17 @@
+<header class="header">
+  <p class="title">Patatas Subscribers ToGo</p>
+  <small class="page-title">{{ title }}</small>
+
+  <div class="button-section">
+    <div>
+      <button class="back-button" *ngIf="showBackButton" mat-raised-button (click)="goBack()">
+        Atrás
+      </button>
+    </div>
+    <div>
+      <a class="button-action" *ngIf="showActionButton" [routerLink]="linkAction"  mat-raised-button color="accent">
+        {{linkText}}
+      </a>
+    </div>
+  </div>
+</header>

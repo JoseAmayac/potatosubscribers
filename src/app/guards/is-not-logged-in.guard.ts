@@ -6,23 +6,24 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanLoad {
+export class IsNotLoggedInGuard implements CanActivate, CanLoad {
   constructor( private authService: AuthService,
                private router: Router){}
+
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isLoggedIn = this.authService.isAuthenticated();
-    if( isLoggedIn ) return true;
 
-    this.router.navigateByUrl('/auth');
+    if( !isLoggedIn ) return true;
+
+    this.router.navigateByUrl("/content");
     return false;
   }
-
-  canLoad(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  canLoad(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isLoggedIn = this.authService.isAuthenticated();
-    if( isLoggedIn ) return true;
 
-    this.router.navigateByUrl('/auth');
+    if( !isLoggedIn ) return true;
+
+    this.router.navigateByUrl("/content");
     return false;
   }
-
 }

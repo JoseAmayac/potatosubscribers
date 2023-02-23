@@ -8,7 +8,9 @@ import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import {MatSortModule} from '@angular/material/sort';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatSortModule
+    MatSortModule,
+    ComponentsModule,
+    MatStepperModule
   ]
 })
 export class SubscribersModule { }
