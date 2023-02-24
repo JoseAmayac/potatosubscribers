@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Country } from 'src/app/interfaces/country';
 import { CountriesService } from 'src/app/services/countries.service';
@@ -14,6 +14,7 @@ export class SelectCountryComponent implements OnInit {
   @Input() control: string = '';
   formControl!: FormControl;
   @Input() formGroup!: FormGroup;
+  @Output() loadComplete: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private countriesService: CountriesService) {}
 
@@ -30,10 +31,12 @@ export class SelectCountryComponent implements OnInit {
   }
 
   private handleCorrectResponseCountries( countries: Country[]): void{
+    this.loadComplete.emit(1);
     this.countries = countries;
   }
 
   private handleErrorCountries( error: HttpErrorResponse ): void {
+    this.loadComplete.emit(0);
     console.log( error );
 
   }

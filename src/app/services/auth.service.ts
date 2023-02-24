@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
@@ -26,7 +26,7 @@ export class AuthService {
    * navegador
    * @param responseData La respuesta que devuelve el backend
    */
-  private saveLoginInfo(responseData: LoginResponse): void{
+  public saveLoginInfo(responseData: LoginResponse): void{
     const { Token, RefreshToken } = responseData;
     localStorage.setItem("token", Token);
     localStorage.setItem("refreshToken", RefreshToken);
@@ -42,6 +42,23 @@ export class AuthService {
   public getToken(): string{
     return localStorage.getItem("token") || '';
   }
+  public getRefreshToken(): string {
+    return localStorage.getItem('refreshToken') || '';
+  }
+
+  public deleteToken(): void{
+    localStorage.removeItem('token');
+  }
+
+  public refreshToken(): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `RefreshToken ${ this.getRefreshToken() }`
+    })
+    return this.http.post(`${URL}/account/regenerateToken`, {}, {
+      headers
+    });
+  }
+
   /**
    * Cierra sesión en la aplicación, eliminando la información del localstorage y redireccionando
    * hacia la pantalla de login

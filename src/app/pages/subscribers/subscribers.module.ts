@@ -18,10 +18,12 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon'
 import { RouterModule } from '@angular/router';
+import { DetailComponent } from './detail/detail.component';
 @NgModule({
   declarations: [
     ListComponent,
-    FormComponent
+    FormComponent,
+    DetailComponent
   ],
   imports: [
     CommonModule,

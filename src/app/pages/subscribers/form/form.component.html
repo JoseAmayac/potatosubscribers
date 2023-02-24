@@ -2,6 +2,9 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
+      <div class="example-loading-shade" *ngIf="isLoading">
+        <mat-spinner [diameter]="30" ></mat-spinner>
+      </div>
       <form [formGroup]="formData" (ngSubmit)="toEdit ? onUpdate() : onCreate()">
           <div class="box-flex">
             <mat-form-field appearance="outline">
@@ -27,7 +30,7 @@
             </mat-form-field>
 
 
-            <app-select-country control="CountryCode" [formGroup]="formData" ></app-select-country>
+            <app-select-country (loadComplete)="onCountriesLoaded($event)" control="CountryCode" [formGroup]="formData" ></app-select-country>
 
             <mat-form-field appearance="outline">
               <mat-label>Phone Number</mat-label>

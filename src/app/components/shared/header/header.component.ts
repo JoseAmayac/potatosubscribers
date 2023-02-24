@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,11 +14,16 @@ export class HeaderComponent implements OnInit {
   @Input() linkText: string = '';
   @Input() showActionButton: boolean = true;
 
-  constructor(private _location: Location) { }
+  constructor(private _location: Location,
+              private authService: AuthService) { }
 
   ngOnInit(): void {}
 
   public goBack(){
     this._location.back();
+  }
+
+  public signOut(): void{
+    this.authService.logout();
   }
 }

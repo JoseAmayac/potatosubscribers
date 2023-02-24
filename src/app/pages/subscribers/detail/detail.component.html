@@ -1,0 +1,69 @@
+<app-header title="Subscriber details" [showBackButton]="true" ></app-header>
+<div class="content">
+  <div class="example-loading-shade" *ngIf="isLoading">
+    <mat-spinner [diameter]="30" ></mat-spinner>
+  </div>
+  <mat-card *ngIf="subscriber">
+    <mat-card-header>
+      <div class="flexbox">
+        <div >
+          <mat-card-title>Subscriber information</mat-card-title>
+        </div>
+        <div >
+          <a mat-raised-button routerLink="/content/subscribers/edit/{{subscriber.Id}}" color="primary">
+            <mat-icon>edit</mat-icon>
+            <span>Edit information</span>
+          </a>
+          <button mat-raised-button color="warn" (click)="onDeleteSubscriber()">
+            <mat-icon>delete</mat-icon>
+            <span>Delete subscriber </span>
+          </button>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="flexbox">
+        <div class="item">
+          <span class="item__title">Name</span>
+          <p class="item__value">{{subscriber.Name}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Email</span>
+          <p class="item__value">{{subscriber.Email}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Job Title</span>
+          <p class="item__value">{{subscriber.JobTitle}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Phone Number</span>
+          <p class="item__value">{{subscriber.PhoneCodeAndNumber}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Area</span>
+          <p class="item__value">{{subscriber.Area}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Country</span>
+          <p class="item__value">{{subscriber.CountryName}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Subscription Date</span>
+          <p class="item__value">{{subscriber.SubscriptionDate}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Activity</span>
+          <p class="item__value">{{subscriber.Activity}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Subscription State Description</span>
+          <p class="item__value">{{subscriber.SubscriptionStateDescription}}</p>
+        </div>
+        <div class="item">
+          <span class="item__title">Last Activity</span>
+          <p class="item__value">{{subscriber.LastActivityString}}</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

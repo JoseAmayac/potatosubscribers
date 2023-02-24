@@ -116,4 +116,15 @@ export class FormComponent implements OnInit {
     })
   }
 
+  public onCountriesLoaded(event: number): void {
+    if( event === 0){
+      this._snackBar.open('Error loading information', '', {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+    }
+
+    this.isLoading = false;
+  }
+
 }

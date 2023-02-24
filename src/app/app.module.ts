@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { SessionExpiredInterceptor } from './interceptor/session-expired.interceptor';
+import { SessionExpiredInterceptor } from './interceptors/session-expired.interceptor';
 
 @NgModule({
   declarations: [

@@ -2,6 +2,7 @@
   background-color: #673ab7;
   color: white;
   padding: 20px 30px;
+  position: relative;
 }
 
 .header .title{
@@ -26,4 +27,17 @@
 .button-section{
   display: flex;
   justify-content: space-between;
+}
+
+.logout-button{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+@media only screen and (max-width: 480px) {
+  .logout-button{
+    position: relative;
+    margin-top: 20px;
+  }
 }
