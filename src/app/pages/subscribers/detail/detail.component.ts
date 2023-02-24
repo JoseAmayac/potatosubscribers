@@ -28,12 +28,16 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id'); // Obtiene el id desde la ruta
     this.subscriberId = Number( id );
 
     this.getSubscriber();
   }
 
+  /**
+   * Envía una solicitud http get al backend para cargar la información del suscriptor
+   * con el id encontrado en la ruta.
+   */
   public getSubscriber(): void {
     this.subscribersService.getSubscriber(this.subscriberId).subscribe({
       next: (subscriber: Subscriber) => this.handleCorrectResponse( subscriber ),
@@ -41,11 +45,20 @@ export class DetailComponent implements OnInit {
     })
   }
 
+  /**
+   * Si la información del suscriptor es cargada correctamente, se guarda dicha información en
+   * el atributo subscriber, además, se cambia el valor del atributo isLoading a false.
+   */
   private handleCorrectResponse( subscriber: Subscriber ): void {
     this.subscriber = subscriber;
     this.isLoading = false;
   }
 
+  /**
+   * Cuando ocurre algún error cargando la información del suscriptor, se notifica dicho error usando
+   * un snackbar de angular material, posteriormente, el usuario es redireccionado a la página de suscriptores.
+   * @param errorResponse
+   */
   private handleErrorResponse( errorResponse: HttpErrorResponse ): void {
     const { error = 'Server error' } = errorResponse.error;
     this._snackBar.open(error, '', {
