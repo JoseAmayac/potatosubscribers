@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "patatassubscribers": {
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es": "src/locale/messages.es.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,6 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": ["es"],
             "outputPath": "dist/patatassubscribers",
             "index": "src/index.html",
             "main": "src/main.ts",

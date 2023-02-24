@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="name" datatype="html">
+        <source>Nombre</source>
+        <target>Name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/subscribers/list/list.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="email" datatype="html">
+        <source>Correo</source>
+        <target>Email</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/subscribers/list/list.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="jobTitle" datatype="html">
+        <source>Posición</source>
+        <target>JobTitle</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/subscribers/list/list.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="action" datatype="html">
+        <source>Acciones</source>
+        <target>Action</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/subscribers/list/list.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="details" datatype="html">
+        <source>Detalles</source>
+        <target>Details</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/subscribers/list/list.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="edit" datatype="html">
+        <source>Editar</source>
+        <target>Edit info</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/subscribers/list/list.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="delete" datatype="html">
+        <source>Eliminar</source>
+        <target>Delete</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/subscribers/list/list.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
